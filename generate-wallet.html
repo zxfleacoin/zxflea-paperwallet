@@ -11210,6 +11210,8 @@ ninja.publicKey = {
 		seedCount: 0, // counter
 		lastInputTime: new Date().getTime(),
 		seedPoints: [],
+		zoneH: 300,
+		zoneTop: 330,
 
 		// seed function exists to wait for mouse movement to add more entropy before generating an address
 		seed: function (evt) {
@@ -11227,7 +11229,8 @@ ninja.publicKey = {
 			else if ((ninja.seeder.seedCount < ninja.seeder.seedLimit) && evt && (timeStamp - ninja.seeder.lastInputTime) > 40) {
 				SecureRandom.seedTime();
 				SecureRandom.seedInt16((evt.clientX * evt.clientY));
-				ninja.seeder.showPoint(evt.clientX, evt.clientY + 300);
+				var dotPos = ninja.seeder.zoneTop + evt.clientY / (window.innerHeight || document.body.clientHeight) * ninja.seeder.zoneH;
+				ninja.seeder.showPoint(evt.clientX, dotPos);
 				ninja.seeder.seedCount++;
 				ninja.seeder.lastInputTime = new Date().getTime();
 				ninja.seeder.showPool();
